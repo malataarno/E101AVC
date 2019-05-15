@@ -31,12 +31,14 @@ set_motors(5,58);
 }
 //set motor right if to the left of black line
 if(errorRate>100){
- set_motors(1,48);
+sleep1(1);
+ set_motors(1,44);
 set_motors(5,58);
 }
 //set motor left if to the right of line
 if(errorRate>100){
+sleep1(1);
  set_motors(1,58);
-set_motors(5,48);
+set_motors(5,44);
 }
 
