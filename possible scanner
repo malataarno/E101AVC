@@ -41,4 +41,5 @@ sleep1(1);
  set_motors(1,58);
 set_motors(5,44);
 }
+hardware_exchange;
 
