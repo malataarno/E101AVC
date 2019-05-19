@@ -1,0 +1,42 @@
+
+int countc=0;
+pix [320];
+while(countc <320)
+}
+//scan row of pixels at row 120
+ pix [countc] = (int)get_pixel(120,countc,3)
+ countc++
+}
+//find middle value of whiteness between max and min
+ int a=max_element(pix,pix +320);
+ int b=min_element(pixpix +320);
+ int midValue=(a+b)/2;
+ 
+ //set values to ones and zeros based on there whiteness
+ for(i=0;i<320;i++){
+ if(pix[i]>midValue){
+ pix[i]=1;
+ }
+ else{pix[i]=0;}
+ }
+ // creating error number
+ double errorRate=0;
+ for(i=0;i<320;i++){
+ errorRate=(i-160)*pix[i];
+ }
+ //set motor straight if on black line
+ if(errorRate<100&&errorRate>-100){
+ set_motors(1,38);
+set_motors(5,58);
+}
+//set motor right if to the left of black line
+if(errorRate>100){
+ set_motors(1,48);
+set_motors(5,58);
+}
+//set motor left if to the right of line
+if(errorRate>100){
+ set_motors(1,58);
+set_motors(5,48);
+}
+

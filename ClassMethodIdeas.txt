@@ -1,0 +1,4 @@
+camera class --> methods for error code etc etc
+wheel class --> methods for steering, changing wheel speed & data 'current speed, left/right wheel'
+network class --> methods & data for opening the gate
+robot class --> methods for changing quadrants & data 'current quadrant'
