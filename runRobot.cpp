@@ -15,6 +15,7 @@
 //main method
 
 class Camera{
+	private:
 	//fields here
 	public:
 	//methods here
@@ -24,9 +25,9 @@ class Camera{
 class GateOpen{
 	//fields here
 	private:	
-	char[15] serverAddress = { '1','2','7','.','0','0','1','.','0','0','1','.','0','0','1' };	//char server_addr[15] = { '1','2','7','.','0','0','1','.','0','0','1','.','0','0','1' }; TEST THE ADDRESS
-	int port = 0;																				//need to find what the port number is
-	char[24] message = { '' };																	//find what the message should be
+	char[15] serverAddress = { '1','3','0','.','1','9','5','.','0','0','6','.','1','6','6' };	//char server_addr[15] = { '1','2','7','.','0','0','1','.','0','0','1','.','0','0','1' }; TEST THE ADDRESS
+	int port = 1024;																				//need to find what the port number is0
+	char[24] message = { 'P','l','e','a','s','e' };																	//find what the message should b1024
 
 	public:
 	//methods here
@@ -43,13 +44,14 @@ class GateOpen{
 		int msg_recieved = 0;
 		while (msg_recieved == 0) { 
 			//wait for response, returns 0 when false???
-			msg_recieved = receive_from_server();
+			msg_recieved = receive_from_server(message);
 		}
 		
-		//where does response go???
-			//create password
+		
+		
+		
 
-		send_to_server(password);
+		send_to_server(message);
 		//gate opens, mission accomplished
 
 	};
@@ -59,6 +61,7 @@ class GateOpen{
 	
 	
 class Wheels{
+	private:
 	//fields here
 	public:
 	//methods here
@@ -66,6 +69,7 @@ class Wheels{
 	}
 
 class RunRobot{
+	private:
 	//fields here
 	public:
 	//methods here
