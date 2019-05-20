@@ -20,37 +20,25 @@ class Camera{
 	public:
 	//methods here
 	
-	}
+	};
 	
 class GateOpen{
 	//fields here
 	private:	
-	char[15] serverAddress = { '1','3','0','.','1','9','5','.','0','0','6','.','1','6','6' };	//char server_addr[15] = { '1','2','7','.','0','0','1','.','0','0','1','.','0','0','1' }; TEST THE ADDRESS
+	char[15] serverAddress = { '1','3','0','.','1','9','5','.','6','.','1','9','6' };	//char server_addr[15] = { '1','2','7','.','0','0','1','.','0','0','1','.','0','0','1' }; TEST THE ADDRESS
 	int port = 1024;																				//need to find what the port number is0
-	char[24] message = { 'P','l','e','a','s','e' };																	//find what the message should b1024
+	char[24] message = { "Please" };																	//find what the message should b1024
 
 	public:
 	//methods here
 	int openGate(){
 		//connect to the server
-		int isConnected = 0;
-		while (isConnected == 0) {
-			isConnected = connect_to_server(serverAddress,port);
-		}
-		
+		connect_to_server(serverAddress,port);
 		//send message to server
 		send_to_server(message);
-			
-		int msg_recieved = 0;
-		while (msg_recieved == 0) { 
-			//wait for response, returns 0 when false???
-			msg_recieved = receive_from_server(message);
-		}
-		
-		
-		
-		
-
+		//get message from server
+		receive_from_server(message);
+		//send server response back to server
 		send_to_server(message);
 		//gate opens, mission accomplished
 		
@@ -58,7 +46,7 @@ class GateOpen{
 
 	};
 	
-	}
+	};
 	
 	
 	
@@ -68,7 +56,7 @@ class Wheels{
 	public:
 	//methods here
 	
-	}
+	};
 
 class RunRobot{
 	private:
@@ -76,7 +64,7 @@ class RunRobot{
 	public:
 	//methods here
 	
-	}
+	};
 
 
 
