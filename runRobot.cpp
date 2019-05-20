@@ -31,7 +31,7 @@ class GateOpen{
 
 	public:
 	//methods here
-	void openGate(){
+	int openGate(){
 		//connect to the server
 		int isConnected = 0;
 		while (isConnected == 0) {
@@ -53,6 +53,8 @@ class GateOpen{
 
 		send_to_server(message);
 		//gate opens, mission accomplished
+		
+		return 1;
 
 	};
 	
@@ -83,6 +85,10 @@ int main(){
 		//make a new object
 	GateOpen open;
 		//call a method on the object
-	open.openGate();
+	int gateIsOpen = open.openGate();
+	while(gateIsOpen == 0){
+		
+		}
+		
 	return 0;
 	}
