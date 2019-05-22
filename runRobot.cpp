@@ -25,14 +25,14 @@ int i;
 int pix [320];
 init(0);
 
-	public:
-	void doCamera{
+public:
+void doCamera{
 	open_screen_stream();
-while(true){
+	while(true){
          hardware_exchange();take_picture(); update_screen(); int countc=0;
-while(countc <320)
-{pix [countc] = (int)get_pixel(120,countc,3);
- countc++;}
+	while(countc <320)
+	{pix [countc] = (int)get_pixel(120,countc,3);
+ 	countc++;}
 
 int max=0;
 int min=10000000;
@@ -48,9 +48,9 @@ finalError=0;
 for(i=0;i<320;i++){
 errorRate=(i-160)*pix[i];
 finalError=finalError+errorRate;}
-	return finalError;}
+	return finalError;} //once you call return the method will exit.
 close_screen_stream();
-return 0;
+//return 0;
 }
 }
 }
@@ -58,37 +58,28 @@ return 0;
 class GateOpen{
 	//fields here
 	private:	
-	char[15] serverAddress = { '1','2','7','.','0','0','1','.','0','0','1','.','0','0','1' };	//char server_addr[15] = { '1','2','7','.','0','0','1','.','0','0','1','.','0','0','1' }; TEST THE ADDRESS
-	int port = 0;																				//need to find what the port number is
-	char[24] message = { '' };																	//find what the message should be
+	char[15] serverAddress = { '1','3','0','.','1','9','5','.','6','.','1','9','6' };	//char server_addr[15] = { '1','2','7','.','0','0','1','.','0','0','1','.','0','0','1' }; TEST THE ADDRESS
+	int port = 1024;																				//need to find what the port number is0
+	char[24] message = { "Please" };																	//find what the message should b1024
 
 	public:
 	//methods here
-	void openGate(){
+	int openGate(){
 		//connect to the server
-		int isConnected = 0;
-		while (isConnected == 0) {
-			isConnected = connect_to_server(serverAddress,port);
-		}
-		
+		connect_to_server(serverAddress,port);
 		//send message to server
 		send_to_server(message);
-			
-		int msg_recieved = 0;
-		while (msg_recieved == 0) { 
-			//wait for response, returns 0 when false???
-			msg_recieved = receive_from_server();
-		}
-		
-		//where does response go???
-			//create password
-
-		send_to_server(password);
+		//get message from server
+		receive_from_server(message);
+		//send server response back to server
+		send_to_server(message);
 		//gate opens, mission accomplished
+		
+		return 1;
 
 	};
 	
-	}
+	};
 	
 	
 	
@@ -103,16 +94,16 @@ class Wheels{
 	speedDiff=(finalError/1000);
 set_motors(1,48+speedDiff);
 set_motors(5,48-speedDiff);}
-}
+};
 	
-	}
+	};
 
 class RunRobot{
 	//fields here
 	public:
 	//methods here
 	
-	}
+	};
 
 
 
