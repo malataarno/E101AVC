@@ -42,18 +42,22 @@ void doCamera{
 
  	int midValue=(max+min)/2;
  	for(i=0;i<320;i++){if(pix[i]>midValue){pix[i]=0;}
- 	else{pix[i]=1;}}
+ 	else{pix[i]=1;}
+	};
+		
 
-		double getError(){ //should probably return an Int
+double getError(){ //should probably return an Int
 	errorRate=0;
 	finalError=0;
 	for(i=0;i<320;i++){
 	errorRate=(i-160)*pix[i];
 	finalError=finalError+errorRate;}
-	return finalError;} //once you call return the method will exit. -- calling return on a void method
-	close_screen_stream();
-
+	return finalError;
+	}; //once you call return the method will exit. -- calling return on a void method, changed to double
+		close_screen_stream();
+	
 		//return 0;
+	
 }
 }
 }
@@ -88,10 +92,12 @@ class GateOpen{
 	
 class Wheels{
 	//fields here
+	private:
 	double finalError;
 	public:
+	//methods here
 	void setSpeed(){
-		//methods here
+		
 		camera a;
 		finalError=a.getError;
 		speedDiff=(finalError/1000);
@@ -115,11 +121,29 @@ class Wheels{
 
 class RunRobot{
 	//fields here
-	int cameraPosition;
+	bool cameraPosition; //true if facing ground
 	int currentQuadrant;
 	public:
 	//methods here
-	    //what dies the robot need to do in each area?
+	void changeCameraPos(){
+	//change the camera motor speed to change its position
+	if(cameraPosition){ //true means facing ground
+		//set the motor to a speed for a certain time to make it look up (90 degree rotation)
+	}else{
+		//set the motor to a speed for a certain time to make it look down (90 degree rotation)
+	}
+		cameraPosition = !cameraPosition;
+	};
+	
+	void followLine(){
+		//the method for quadrant one
+		//follow the curvy line on the ground (for how long? testing needed)
+	};
+	
+	void startRobot(){
+		//the first method to be called, opens the gate and calls follow line
+	};
+	    //what does the robot need to do in each area?
 		//if in quadrant 0
 		//call gate open and move forwards
 	
