@@ -16,14 +16,15 @@
 
 class Camera{
 	//fields here
+	private:
 	int speedDiff;
- double errorRate=0;
- double finalError=0;
-int countc=0;
-int main(){
-int i;
-int pix [320];
-init(0);
+ 	double errorRate=0;
+ 	double finalError=0;
+	int countc=0;
+	int main(){ //main???
+	int i;
+	int pix [320];
+	init(0);
 
 public:
 void doCamera{
@@ -34,23 +35,25 @@ void doCamera{
 	{pix [countc] = (int)get_pixel(120,countc,3);
  	countc++;}
 
-int max=0;
-int min=10000000;
- for(i=0;i<320;i++){ if(pix[i]>max){max=pix[i];}}
- for(i=0;i<320;i++){if(pix[i]<min){min=pix[i];}}
+	int max=0;
+	int min=10000000;
+ 	for(i=0;i<320;i++){ if(pix[i]>max){max=pix[i];}}
+ 	for(i=0;i<320;i++){if(pix[i]<min){min=pix[i];}}
 
- int midValue=(max+min)/2;
- for(i=0;i<320;i++){if(pix[i]>midValue){pix[i]=0;}
- else{pix[i]=1;}}
-void getError(){
-errorRate=0;
-finalError=0;
-for(i=0;i<320;i++){
-errorRate=(i-160)*pix[i];
-finalError=finalError+errorRate;}
+ 	int midValue=(max+min)/2;
+ 	for(i=0;i<320;i++){if(pix[i]>midValue){pix[i]=0;}
+ 	else{pix[i]=1;}}
+
+		double getError(){ //should probably return an Int
+	errorRate=0;
+	finalError=0;
+	for(i=0;i<320;i++){
+	errorRate=(i-160)*pix[i];
+	finalError=finalError+errorRate;}
 	return finalError;} //once you call return the method will exit. -- calling return on a void method
-close_screen_stream();
-//return 0;
+	close_screen_stream();
+
+		//return 0;
 }
 }
 }
@@ -88,21 +91,46 @@ class Wheels{
 	double finalError;
 	public:
 	void setSpeed(){
-	//methods here
-	camera a;
-	finalError=a.getError;
-	speedDiff=(finalError/1000);
-set_motors(1,48+speedDiff);
-set_motors(5,48-speedDiff);}
-};
+		//methods here
+		camera a;
+		finalError=a.getError;
+		speedDiff=(finalError/1000);
+		set_motors(1,48+speedDiff);
+		set_motors(5,48-speedDiff);}
+	};
+	
+	void reverse(){
+	//reverse the robot
+		//call when the line is 'lost'
+	//call the get error method
+		//if line is found, set the motors to neurtral and exit
+		//if no, set the motor speed to reverse and check again
+	};
+	
+	void stop(){
+	//set the motor speed to stop the robot
+	};
 	
 	};
 
 class RunRobot{
 	//fields here
+	int cameraPosition;
+	int currentQuadrant;
 	public:
 	//methods here
+	    //what dies the robot need to do in each area?
+		//if in quadrant 0
+		//call gate open and move forwards
 	
+		//if in quadrant 1
+		//
+	
+		//if in quadrant 2
+		//
+	
+		//if in quadrant 3
+		//
 	};
 
 
