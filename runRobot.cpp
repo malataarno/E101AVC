@@ -48,7 +48,7 @@ finalError=0;
 for(i=0;i<320;i++){
 errorRate=(i-160)*pix[i];
 finalError=finalError+errorRate;}
-	return finalError;} //once you call return the method will exit.
+	return finalError;} //once you call return the method will exit. -- calling return on a void method
 close_screen_stream();
 //return 0;
 }
@@ -85,7 +85,7 @@ class GateOpen{
 	
 class Wheels{
 	//fields here
-	double finalError
+	double finalError;
 	public:
 	void setSpeed(){
 	//methods here
