@@ -27,9 +27,9 @@ class Camera{		//Ben: reformatted code to make it easier to read - didn't change
 	init(0);
 
 	public:
-	void doCamera{	//what is this method suppossed to do?
+	void doCamera(){	//what is this method suppossed to do? -- this method creates an array of 1's & 0's to generate an error later.
 		open_screen_stream();
-		while (true) {	//this loop never exits, runs forever.
+		//while (true) {	//this loop never exits, runs forever.
 			hardware_exchange();
 			take_picture();
 			update_screen();
@@ -46,6 +46,7 @@ class Camera{		//Ben: reformatted code to make it easier to read - didn't change
 			for (i = 0; i < 320; i++) { if (pix[i] < min) { min = pix[i]; } }
 
 			int midValue = (max + min) / 2;
+			//creating array of ones and zeros...
 			for (i = 0; i < 320; i++) {
 				if (pix[i] > midValue) {
 					pix[i] = 0;
@@ -53,16 +54,15 @@ class Camera{		//Ben: reformatted code to make it easier to read - didn't change
 				else {
 					pix[i] = 1;
 				}
-
 			}
 
-		}
+		//}
 		//close_screen_stream();
 	};
 		
 
 	double getError(){ //should probably return an Int
-	
+		this.doCamera();
 		errorRate=0;
 		finalError=0;
 		for(i=0;i<320;i++){
@@ -156,9 +156,9 @@ class Wheels{
 	
 
 	
-	};
+	
 
-class RunRobot{
+class DoRobot {
 	//fields here
 	private:
 	bool cameraPosition = true; //true if facing ground
@@ -175,37 +175,42 @@ class RunRobot{
 		cameraPosition = !cameraPosition;
 	};
 	
-	int followLine(){
+	int followLine(Camera a , Wheels wheel){
 		//the method for quadrant one
 		//follow the curvy line on the ground (for how long? testing needed)
 		//returns 1 when section is complete
+		
+		
+			for(int i = 0; i < 500; i++){//testing if robot can follow line - loop runs 500 times
+				//check for line
+				double err = a.getError();
+				if(err == 0){
+					wheel.reverse();
+					}
+			wheel.setSpeed();
+			}
+			wheel.stop();
+			//this.navMaze(a,wheel);
 		return 2;
 	};
 	
-	int navMaze() {
-		//the method for quadrant one
-		//follow the curvy line on the ground (for how long? testing needed)
-		//returns 1 when section is complete
+	int navMaze(Camera a , Wheels wheel) {
+		//the method for quadrant two
+		//follow right angle turns
+		
 		return 3;
 	};
 
 	void startRobot(){
 		//the first method to be called, opens the gate and calls follow line
-		
+		GateOpen open;
+		Camera a;
+		Wheels wheel;
+		open.openGate();
+		this.followLine(a,wheel);
 	};
-	    //what does the robot need to do in each area?
-		//if in quadrant 0
-		//call gate open and move forwards
-	
-		//if in quadrant 1
-		//
-	
-		//if in quadrant 2
-		//
-	
-		//if in quadrant 3
-		//
-	};
+
+};
 
 
 
@@ -216,8 +221,11 @@ int main(){
 		//call a method on the object
 	open.openGate();
 	
-	camera on;
-	on.runCamera();	//this method does not exist
+	//camera on;
+	//on.runCamera();	//this method does not exist
+	DoRobot run;
+	run.startRobot();
 	
+		
 	return 0;
 	}
