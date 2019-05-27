@@ -15,10 +15,7 @@
 //main method
 
 class Camera{
-        //fields here
         public:
-        double runCamera(){
-
                 int countc=0;
                 //int main(){
                 int i;
@@ -29,19 +26,20 @@ class Camera{
                 double errorRate=0;
                 double finalError=0;
                 int blackCount;
-
-
-                                        while(countc <320)
-                                                {pix [countc] = (int)get_pixel(120,countc,3);
-                                                        countc++;
-                                                        }
-
-
-                                        for(i=0;i<320;i++){
-                                                if(pix[i]>max){max=pix[i];}
-                                                if(pix[i]<min){min=pix[i];}
-                                                }
-                                        midValue=(max-min)/2;
+double runCamera(int colour){
+                                while(countc <320){
+                                        pix [countc] = (int)get_pixel(120,countc,colour);
+                                                        countc++;}
+                                                       double totpix+=pix[i];
+                                                       return totpix;}
+                                                        
+double getError(){
+                    for(i=0;i<320;i++){
+                             if(pix[i]>max){max=pix[i];}
+                             if(pix[i]<min){min=pix[i];}
+                                }
+                                                
+midValue=(max-min)/2;
                                 for(i=0;i<320;i++){
                                         if(pix[i]>midValue){
                                                 pix[i]=0;
@@ -49,22 +47,20 @@ class Camera{
                                         else{pix[i]=1;}
                                         }
 
-                                        for(i=0;i<320;i++){
-                                                errorRate=(i-160)*pix[i];
-                                                finalError=finalError+errorRate;
-                                                if(pix[i]==1){
-                                                        blackCount++;
+ for(i=0;i<320;i++){
+                                 errorRate=(i-160)*pix[i];
+                                 finalError=finalError+errorRate;
+                                 if(pix[i]==1){
+                                               blackCount++;
                                                 }
+                                         }
+finalError=finalError/blackCount;
 
-                                                }
-                                                finalError=finalError/blackCount;
-
-                                                for(i=0;i<320;i+=32){
+for(i=0;i<320;i+=32){
         printf(" %d",pix[i]);
         }printf("\n");
-                                                return finalError;
-                                                };
-
+  return finalError;
+ };
 };
 
 
@@ -103,15 +99,15 @@ class Wheels{
         int leftW=50;
         int rightW=46;
         double kp=0.1;
-        //fields here
-        public:
-        int speedDiff;
+       
+       public:
+                int speedDiff;
                 double errorRate=0;
                 double finalError;
 
-                void setSpeed(){
-        finalError=a.runCamera();
-        //methods here
+void setSpeed(){
+        a.runCamera(3);
+        finalError=a.getError();
         speedDiff=(finalError*kp);
         printf("motor %d",speedDiff);
         printf(" %f",finalError);
@@ -133,19 +129,26 @@ int main(){
         //example code
                 //make a new objec
                 init(0);
+                double sector=1;
 
                 open_screen_stream();
                 Wheels wheels;
                 //Camera on;
-        //GateOpen open;
                 //call a method on the object
-        //open.openGate();
-        while(true){
+                while(sector==0){
+        GateOpen open;
+        open.openGate();
+        sector++;}
+        
+        while(sector==1){
+                on.runCamera(3);
                 wheels.setSpeed();
-                                hardware_exchange();take_picture(); update_screen();
-
-
-        //on.runCamera();
+                hardware_exchange();take_picture(); update_screen();
+                if(on.runCamera(1)>10000){sector++};
+        while(sector==2){
+        /set up maze
+        }
+             
         }
         close_screen_stream();
         return 0;
