@@ -3,17 +3,6 @@
 #include <unistd.h>
 #include <time.h>
 
-//run robot needs fields for
-//current quadrant
-//camera position
-
-//rubRobot needs to create new 
-//camera object
-//network object
-//wheel objects
-
-//main method
-
 class Camera{		//Ben: reformatted code to make it easier to read - didn't change any code
 	//fields here
 	private:
@@ -162,20 +151,21 @@ class DoRobot {
 	//fields here
 	private:
 	bool cameraPosition = true; //true if facing ground
-	int currentQuadrant = 1; //area 1 is the gate, initial position
+	int currentQuadrant = 0; //area 1 is the gate, initial position
 	public:
 	//methods here
 	void changeCameraPos(){
-	//change the camera motor speed to change its position
-	if(cameraPosition){ //true means facing ground
-		//set the motor to a speed for a certain time to make it look up (90 degree rotation)
-	}else{
-		//set the motor to a speed for a certain time to make it look down (90 degree rotation)
-	}
-		cameraPosition = !cameraPosition;
+		if(cameraPosition){ //true means facing ground
+			//set the motor to a speed for a certain time to make it look up (90 degree rotation)
+		
+		}else{
+			//set the motor to a speed for a certain time to make it look down (90 degree rotation)
+		
+		}
+			cameraPosition = !cameraPosition;
 	};
 	
-	int followLine(Camera a , Wheels wheel){
+	void followLine(Camera a , Wheels wheel){
 		//the method for quadrant one
 		//follow the curvy line on the ground (for how long? testing needed)
 		//returns 1 when section is complete
@@ -191,14 +181,14 @@ class DoRobot {
 			}
 			wheel.stop();
 			//this.navMaze(a,wheel);
-		return 2;
+		currentQuadrant = 2;
 	};
 	
-	int navMaze(Camera a , Wheels wheel) {
+	void navMaze(Camera a , Wheels wheel) {
 		//the method for quadrant two
 		//follow right angle turns
 		
-		return 3;
+		currentQuadrant = 3;
 	};
 
 	void startRobot(){
@@ -206,7 +196,8 @@ class DoRobot {
 		GateOpen open;
 		Camera a;
 		Wheels wheel;
-		open.openGate();
+		currentQuadrant = 0;
+		currentQuadrant = open.openGate();
 		this.followLine(a,wheel);
 	};
 
@@ -217,12 +208,13 @@ class DoRobot {
 int main(){
 	//example code
 		//make a new object
-	GateOpen open;
+	//GateOpen open;
 		//call a method on the object
-	open.openGate();
+	//open.openGate();
 	
 	//camera on;
 	//on.runCamera();	//this method does not exist
+	int debug = 0; //set to 1 for debug information
 	DoRobot run;
 	run.startRobot();
 	
