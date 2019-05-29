@@ -26,11 +26,12 @@ class Camera{
                 double errorRate=0;
                 double finalError=0;
                 int blackCount;
+                double totpix=0;
 double runCamera(int colour){
                                 while(countc <320){
                                         pix [countc] = (int)get_pixel(120,countc,colour);
                                                         countc++;}
-                                                       double totpix+=pix[i];
+                                                        totpix+=pix[i];
                                                        return totpix;}
                                                         
 double getError(){
@@ -133,9 +134,9 @@ int main(){
 
                 open_screen_stream();
                 Wheels wheels;
-                //Camera on;
+                Camera on;
                 //call a method on the object
-                while(sector==0){
+        while(sector==0){
         GateOpen open;
         open.openGate();
         sector++;}
@@ -146,7 +147,8 @@ int main(){
                 hardware_exchange();take_picture(); update_screen();
                 if(on.runCamera(1)>10000){sector++};
         while(sector==2){
-        /set up maze
+        //set up maze
+        
         }
              
         }
