@@ -3,72 +3,75 @@
 #include <unistd.h>
 #include <time.h>
 
-class Camera{		//Ben: reformatted code to make it easier to read - didn't change any code
-	//fields here
+/*
+ * Run camera method:
+ * Creates array of pixels of a certain color.
+ * 
+ * Get Error method:
+ * Returns a double which describes how far to the left/right the black line is from the centre of the camera.
+ * 
+ * */
+class Camera{ //updated class to most recent version
 	private:
-	int speedDiff;
- 	double errorRate=0;
- 	double finalError=0;
 	int countc=0;
-	//main(){ //main???
-	int i;
-	int pix [320];
-	init(0);
-
-	public:
-	void doCamera(){	//what is this method suppossed to do? -- this method creates an array of 1's & 0's to generate an error later.
-		open_screen_stream();
-		//while (true) {	//this loop never exits, runs forever.
-			hardware_exchange();
-			take_picture();
-			update_screen();
-			int countc = 0;
-
-			while (countc < 320) {
-				pix[countc] = (int)get_pixel(120, countc, 3);
-				countc++;
-			}
-
-			int max = 0;
-			int min = 10000000;
-			for (i = 0; i < 320; i++) { if (pix[i] > max) { max = pix[i]; } }
-			for (i = 0; i < 320; i++) { if (pix[i] < min) { min = pix[i]; } }
-
-			int midValue = (max + min) / 2;
-			//creating array of ones and zeros...
-			for (i = 0; i < 320; i++) {
-				if (pix[i] > midValue) {
-					pix[i] = 0;
-				}
-				else {
-					pix[i] = 1;
-				}
-			}
-
-		//}
-		//close_screen_stream();
-	};
+    int i;
+    int pix [320];
+    int max=0;
+    int min=0;
+    double midValue;
+    double errorRate=0;
+    double finalError=0;
+    int blackCount;
+    double totpix=0;
+        public:
+//double                
+void runCamera(int colour){
+       totpix=0; //reset field 
+       while(countc <320){
+       pix [countc] = (int)get_pixel(120,countc,colour);
+       countc++;
+       }
+       totpix+=pix[i];
+       //return totpix; <-- Method is updating a FIELD, it does not need to return anything.
+       
+							};
+                                                        
+double getError(){
+       for(i=0;i<320;i++){
+               if(pix[i]>max){max=pix[i];}
+               if(pix[i]<min){min=pix[i];}
+                         }
+                                                
+		midValue=(max-min)/2;
 		
+              for(i=0;i<320;i++){
+					if(pix[i]>midValue){
+                            pix[i]=0;
+                     }else{
+							pix[i]=1;}
+                                 }
 
-	double getError(){ //should probably return an Int
-		this.doCamera();
-		errorRate=0;
-		finalError=0;
-		for(i=0;i<320;i++){
-			errorRate=(i-160)*pix[i];
-			finalError=finalError+errorRate;
-		}
-		close_screen_stream();
-		return finalError;
-	}; //once you call return the method will exit. -- calling return on a void method, changed to double
-		//close_screen_stream();
-	
-		//return 0;
-	
+ for(i=0;i<320;i++){
+	errorRate=(i-160)*pix[i];
+	finalError=finalError+errorRate;
+			if(pix[i]==1){
+					blackCount++;
+                          }
+                    }
+                    
+	finalError=finalError/blackCount;
+
+	for(i=0;i<320;i+=32){
+        printf(" %d",pix[i]);
+        }printf("\n");
+  return finalError;
+ };
 };
-//}
-//}
-	
+
+/*
+ * Has one method:
+ * openGate() opens the gate.
+ * */	
 class GateOpen{
 	//fields here
 	private:	
@@ -100,54 +103,70 @@ class GateOpen{
 class Wheels{
 	//fields here
 	private:
-	double finalError;
-	//shouldnt speedDiff be declared here?
+        Camera a;
+        int leftW=50; //48+2 = 50, speed = 2
+        int rightW=46; //48-2 = 46, speed = 2
+        double kp=0.1;
+        
 	public:
-	//methods here
-	void setSpeed(){
-		
-		camera a;
-		finalError=a.getError();			
-		speedDiff=(finalError/1000);
-		set_motors(1,48+speedDiff);
-		set_motors(5,48-speedDiff);}
-		//hardware exchange method is never called
-		//update_hardware();
-	};
-	
-	
-	void stop(){
+				int speedDiff;
+                double errorRate=0;
+                double finalError;
+/*
+ * Changes the speed of the motor, to keep the robot following the line.
+ * DOES NOT update the motor speed.
+ * */                
+void setSpeed(){
+        a.runCamera(3);
+        finalError=a.getError();
+        speedDiff=(finalError*kp);
+        printf("motor %d",speedDiff);
+        printf(" %f",finalError);
+		set_motors(1,leftW+speedDiff);
+		set_motors(5,rightW+speedDiff);
+};
+/*
+ * Calling this method will stop the robot.
+ * */
+void stop(){
 		//set the motor speed to stop the robot
 		set_motors(1, 48);
 		set_motors(5, 48);
 		update_hardware();
 	};
-
-	/*
-		Reverses the robot, stops reversing when get error method returns non-zero value.
-	*/
-	void reverse(){
+/*
+ * Reverses the robot, stops reversing when get error method returns non-zero value.
+ * */
+void reverse(){
 		//call when the line is 'lost'
-		camera a;
 		//setting motors to reverse
+		
 		set_motors(1,48-3);
 		set_motors(5,48+3);
 		update_hardware();
 		while (true) {
+			a.runCamera(3);
 			double error = a.getError();
 			if (error != 0) { //line regained
 				break;
 			}
-			sleep1(10); //sleep 10 ms
+		sleep1(10); //sleep 10 ms
 		}
 		this.stop();
 	};
+};
+	
+	
+
+
+
 	
 
 	
 	
-
-class DoRobot {
+//This class is no longer needed.
+//The main method does exactly the same thing.
+/*class DoRobot {
 	//fields here
 	private:
 	bool cameraPosition = true; //true if facing ground
@@ -202,22 +221,50 @@ class DoRobot {
 	};
 
 };
-
+*/
 
 
 int main(){
-	//example code
-		//make a new object
-	//GateOpen open;
-		//call a method on the object
-	//open.openGate();
-	
-	//camera on;
-	//on.runCamera();	//this method does not exist
-	int debug = 0; //set to 1 for debug information
-	DoRobot run;
-	run.startRobot();
-	
-		
-	return 0;
-	}
+	init(0);
+    double sector=1; //sector one = behind gate
+
+    open_screen_stream();
+    Wheels wheels;
+    Camera on;
+    GateOpen open;
+                
+    while(sector==1){
+        sector = open.openGate(); //gate open method returns a number (2) when it completes
+        //sector++;
+    }
+				//sector==1 <-- sector 2 is the line section
+        while(sector==2){
+                //on.runCamera(3); <-- already called in setSpeed() method
+                wheels.setSpeed();
+                hardware_exchange();
+                take_picture(); 
+                update_screen();
+                
+                //we should check if the line is even present to begin with here? If no: call reverse method
+                
+                sleep1(10); //sleep, robot does not need to update every milisecond
+                if(on.runCamera(1)>10000){sector++}; //what is this for?
+		}
+				
+        while(sector==3){
+        //set up maze (sector 3)
+        
+        
+        }
+        
+        //when sector 3 (maze) is complete, change the camera position
+        while(sector == 4){
+		//drive towards the first 'duck tower' (colour: Red)
+		//drive towards the second tower (Color: Green)
+		//drive towards final tower (Color: Blue)
+			
+		}     
+        
+        close_screen_stream();
+        return 0;
+        };
