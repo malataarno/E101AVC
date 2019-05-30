@@ -25,14 +25,14 @@ class Camera{ //updated class to most recent version
     double totpix=0;
         public:
 //double                
-void runCamera(int colour){
+double runCamera(int colour){
        totpix=0; //reset field 
        while(countc <320){
        pix [countc] = (int)get_pixel(120,countc,colour);
        countc++;
        }
        totpix+=pix[i];
-       //return totpix; <-- Method is updating a FIELD, it does not need to return anything.
+       return totpix; 
        
 							};
                                                         
