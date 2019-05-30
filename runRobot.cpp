@@ -92,7 +92,7 @@ class GateOpen{
 		send_to_server(message);
 		//gate opens, mission accomplished
 		
-		return 1;
+		return 2; //update to sector 2 (line section)
 
 	};
 	
