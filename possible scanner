@@ -58,7 +58,7 @@ midValue=(max-min)/2;
 finalError=finalError/blackCount;
 
 for(i=0;i<320;i+=32){
-        printf(" %d",pix[i]);
+        printf("%d",pix[i]);
         }printf("\n");
   return finalError;
  };
@@ -142,13 +142,31 @@ int main(){
         sector++;}
         
         while(sector==1){
-                on.runCamera(3);
                 wheels.setSpeed();
                 hardware_exchange();take_picture(); update_screen();
+                printf(on.runCamera(1));
                 if(on.runCamera(1)>10000){sector++};
+                                sleep1(0,500);
         while(sector==2){
         //set up maze
+        int direction=0;
+        int leftW=50;
+        int rightW=46;
+        wheels.setSpeed();
+       
         
+        if(on.runCamera(3)<1000){
+        if(direction==1 ||direction==2||direction==5||direction==7){
+        set_motors(1,leftW+10);
+        set_motors(5,46);}
+         if(direction==3 ||direction==4||direction==6){
+        set_motors(5,rightW-10);
+        set_motors(1,50);}
+        sleep1(1,0);
+        direction++;}
+       hardware_exchange();take_picture(); update_screen();}
+        
+        }
         }
              
         }
