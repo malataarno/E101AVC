@@ -244,20 +244,44 @@ int main(){
                 hardware_exchange();
                 take_picture(); 
                 update_screen();
+                printf(on.runCamera(1));
                 
                 //we should check if the line is even present to begin with here? If no: call reverse method
                 
-                sleep1(10); //sleep, robot does not need to update every milisecond
+                sleep1(0,500); //sleep, robot does not need to update every milisecond
                 if(on.runCamera(1)>10000){sector++}; //what is this for?
 		}
 				
         while(sector==3){
         //set up maze (sector 3)
+        int direction=0;
+			int leftW=50;
+			int rightW=46;
+			wheels.setSpeed();
+       
+        
+			if(on.runCamera(3)<1000){
+				if(direction==1 ||direction==2||direction==5||direction==7){
+				set_motors(1,leftW+10);
+				set_motors(5,46);
+				}
+				if(direction==3 ||direction==4||direction==6){
+					set_motors(5,rightW-10);
+					set_motors(1,50);
+				}
+				sleep1(1,0);
+				direction++;
+			}
+        
+			hardware_exchange();take_picture(); update_screen();
+       }
+        
         
         
         }
         
         //when sector 3 (maze) is complete, change the camera position
+        
         while(sector == 4){
 		//drive towards the first 'duck tower' (colour: Red)
 		//drive towards the second tower (Color: Green)
